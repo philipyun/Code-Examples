@@ -1,4 +1,4 @@
-C implementation of Conway's Game of Life
+Unix C implementation of Conway's Game of Life
 
 Compile
 

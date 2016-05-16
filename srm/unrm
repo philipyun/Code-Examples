@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Script: srm(unrm)
+# Author: Philip Yun 65035200
+
+############# INIT ##############
+
+# Checks that all inputs to the script are valid
+# There should be at least one parameter to srm
+#   0 parameters will force srm to exit
+
+# Does not support globbing, since globbing will attempt to 
+#   unrm everything in the current directory
+
+if [ $# -eq 0 ]; then
+    echo usage: unrm [filenames]
+    exit 1
+fi
+
+if [ ! -d "~/.trash" ]; then 
+    mkdir -p ~/.trash
+fi
+
+######### UNRM ACTIONS ##########
+
+# this removes the $HOME string from a directory. A user should only
+#   be allowed to remove files in their own home directory, and nothing
+#   past that.  Thus the trash folder will only contain files that existed
+#   somewhere within the user's home folder
+
+path=`pwd`
+path=${path#$HOME}
+
+# For every file in the passed parameters, look for that file in the mirrored
+#   directory in the trash bin.  If it doesnt exist move to the next file,
+#   otherwise, move the file back to its original location (restore)
+
+for file in $*; do
+    if [ -a ~/.trash$path/$file ]; then
+        mv ~/.trash$path/$file ./
+    else
+        echo unrm: cannot restore $file. 
+        echo "    no such file or directory in trash existed here"
+    fi
+done
+
+

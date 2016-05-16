@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Script: srm(lsrm)
+# Author: Philip Yun 65035200
+
+# Checks that all inputs to the script are valid
+# There should be no parameters to lsrm, so any additional
+#   parameters will force lsrm to exit
+
+if [ $# -ne 0 ]; then
+    echo usage: lsrm
+    exit 1
+fi
+
+# If the trash folder does not exist, create the trash folder.
+if [ ! -d "~/.trash" ]; then 
+    mkdir -p ~/.trash
+fi
+
+# Runs ls with list, hiding the . and .. directory, recursively and with color
+ls -lAR --color ~/.trash

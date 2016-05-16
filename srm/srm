@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# Script: srm(srm)
+# Author: Philip Yun 65035200
+
+function init()
+{
+    # Checks that all inputs to the script are valid
+    # There should be at least one parameter to srm
+    #   0 parameters will force srm to exit
+    if [ $1 -eq "0" ]; then
+        echo usage: srm [filenames]
+        exit 1
+    fi
+
+    if [ ! -d "~/.trash" ]; then 
+        mkdir -p ~/.trash
+    fi
+}
+
+function get_path() 
+{
+    # short script that gets the full path of a given file
+    echo "$(cd "$(dirname "$1")" && pwd)"
+}
+
+function check_dir()
+{
+    # this removes the $HOME string from a directory. A user should only
+    #   be allowed to remove files in their own home directory, and nothing
+    #   past that.  Thus the trash folder will only contain files that existed
+    #   somewhere within the user's home folder
+    path=$(get_path $1)
+    path=${path#$HOME}
+
+    # If the current directory doesn't have a mirror in the trash folder
+    #   then create one.  This way we can keep tracks of paths so we can restore
+    #   files to the correct location
+    if [ ! -d "~/.trash$path" ]; then
+        mkdir -p ~/.trash"$path"
+    fi
+
+    # equivalent to "return the path to be appended to the trash folder"
+    echo $path
+}
+
+function srm_main()
+{
+    # For every file passed to the script, check to see if the file exists
+    # If the file exists, move it to the trash.
+    # If we remove "/home/user/directory/file" then it will be placed in:
+    #   home/user/.trash/directory/file
+
+    # as a design choice, it does not take options to run/exec rm.  
+    # rm and srm should be two isolated functional features
+
+    init $#
+    for file in $*; do
+        if [ -a $file ]; then
+            full_path=`check_dir $file`"/$file"
+            mv $file ~/.trash$full_path
+        else
+            echo srm: cannot safe-remove $file : No such file or directory
+        fi
+    done
+}
+
+#run srm
+srm_main $*

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Script: srm(durm)
+# Author: Philip Yun 65035200
+
+# Checks that all inputs to the script are valid
+# There should be no parameters to durm, so any additional
+#   parameters will force durm to exit
+
+if [ $# -ne 0 ]; then
+    echo usage: durm
+    exit 1
+fi
+
+# If the trash folder does not exist, create the trash folder.
+
+if [ ! -d "~/.trash" ]; then
+    mkdir -p ~/.trash
+fi
+
+# du, summary, in bytes, human readable
+du -sbh ~/.trash

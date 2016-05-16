@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Script: srm(trash)
+# Author: Philip Yun 65035200
+
+##### Initial checks for trash command #####
+
+# Checks that all inputs to the script are valid
+# There should be no parameters to trash, so any additional
+#   parameters will force trash to exit
+
+if [ $# -ne 0 ]; then
+    echo usage: trash
+    exit
+fi
+
+# If the trash folder does not exist, create the trash folder.
+if [ ! -d "~/.trash" ]; then 
+    mkdir -p ~/.trash
+fi
+
+##### emptying the trash #####
+
+# Forcefully and recursively remove everything inside the trash folder
+rm -rf ~/.trash/*  

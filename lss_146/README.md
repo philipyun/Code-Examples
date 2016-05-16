@@ -3,7 +3,9 @@ A C implementation of the UNIX command "ls -lS"
 Features options:
 
 -a show hidden files
+
 -A hide hidden files
+
 -L dereference links
 
 Compile:

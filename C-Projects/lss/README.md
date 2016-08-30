@@ -1,17 +1,19 @@
-A C implementation of the UNIX command "ls -lS"
+# LSS
 
-Features options:
+A C implementation of the UNIX command `ls -lS`
 
--a show hidden files
+## Optional Arguments:
 
--A hide hidden files
+`-a show hidden files`
 
--L dereference links
+`-A hide hidden files`
 
-Compile:
+`-L dereference links`
 
-gcc -std=gnu99 -o lss lss.c
+## Compile:
 
-Usage:
+`gcc -std=gnu99 -o lss lss.c`
 
-lss [options...] [files...]
+## Usage:
+
+`lss [options...] [files...]`

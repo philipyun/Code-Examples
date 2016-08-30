@@ -1,9 +1,15 @@
-a C implementation of a small subset of the Unix Command Grep
+# Search: A Parallel Grep
 
-compile:
+C implementation of a small subset of the Unix Command Grep
 
-gcc -std=c99 -o search search.c
+## Compile:
 
-usage:
+`gcc -std=c99 -o search search.c`
 
-search pattern file
+## Usage:
+
+`search pattern [files...]`
+
+## About:
+
+Uses Unix pthreads to search multiple files against a pattern in parallel.
